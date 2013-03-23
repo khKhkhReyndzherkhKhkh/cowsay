@@ -26,4 +26,23 @@ END
       result = last_response.body.strip
       result.should eq(expected)
   end
+  
+  it 'uses a message parameter if supplied' do
+    expected = (<<'END').strip
+ __________ 
+< Good Bye >
+ ---------- 
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+END
+
+    get '/', 'message' => "Good Bye"
+    result = last_response.body.strip
+    result.should eq(expected)    
+  end
+  
+  
 end
