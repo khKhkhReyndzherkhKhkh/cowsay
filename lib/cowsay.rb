@@ -14,7 +14,7 @@ module Cowsay
       env = {
         'COWPATH' => cows_path.to_s
       }
-      IO.popen(env, [perl_path, cowsay_path.to_s, message]) do |process|
+      IO.popen([env, perl_path, cowsay_path.to_s, message]) do |process|
         process.read
       end
     end
