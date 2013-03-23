@@ -1,6 +1,11 @@
 require 'pathname'
 
 module Cowsay
+  
+  def self.new_cow(*args)
+    Cow.new(*args)
+  end
+  
   class Cow
     def say(message)
       cowsay_path = Pathname(__FILE__).dirname + "../bin/cowsay"
@@ -14,4 +19,5 @@ module Cowsay
       end
     end
   end
+  
 end
