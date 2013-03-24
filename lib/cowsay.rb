@@ -7,6 +7,11 @@ module Cowsay
   end
   
   class Cow
+    def initialize(options={})
+      @io = options.fetch(:io) { IO }
+      @cowfile = options.fetch(:cowfile) { 'default' }
+    end
+    
     def say(message)
       cowsay_path = Pathname(__FILE__).dirname + "../bin/cowsay"
       perl_path = "/usr/bin/perl"
@@ -14,7 +19,10 @@ module Cowsay
       env = {
         'COWPATH' => cows_path.to_s
       }
-      IO.popen([env, perl_path, cowsay_path.to_s, message]) do |process|
+      args = %W[-f #{@cowfile}]
+      @io.popen([env, perl_path, cowsay_path.to_s, *args], 'r+') do |process|
+        process.write(message)
+        process.close_write
         process.read
       end
     end

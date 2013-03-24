@@ -44,5 +44,29 @@ END
     result.should eq(expected)    
   end
   
-  
+  it 'accepts a cowfile parameter' do
+      expected = (<<'END').strip
+ _______ 
+< Hello >
+ ------- 
+\                             .       .
+ \                           / `.   .' " 
+  \                  .---.  <    > <    >  .---.
+   \                 |    \  \ - ~ ~ - /  /    |
+         _____          ..-~             ~-..-~
+        |     |   \~~~\.'                    `./~~~/
+       ---------   \__/                        \__/
+      .'  O    \     /               /       \  " 
+     (_____,    `._.'               |         }  \/~~~/
+      `----.          /       }     |        /    \__/
+            `-.      |       /      |       /      `. ,~~|
+                ~-.__|      /_ - ~ ^|      /- _      `..-'   
+                     |     /        |     /     ~-.     `-. _  _  _
+                     |_____|        |_____|         ~ - . _ _ _ _ _>
+END
+
+      get '/', 'cowfile' => "stegosaurus"
+      result = last_response.body.strip
+      result.should eq(expected)    
+    end      
 end
