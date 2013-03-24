@@ -68,5 +68,30 @@ END
       get '/', 'cowfile' => "stegosaurus"
       result = last_response.body.strip
       result.should eq(expected)    
-    end      
+    end  
+    
+    describe '/cowfiles' do
+      def do_request
+        get '/cowfiles'
+      end
+      
+      it 'returns cowfiles with a JSON content type' do
+        do_request
+        last_response.content_type.should match(/application\/json/)
+      end
+      
+      it 'returns a list of available cowfiles in JSON' do
+        do_request
+        result = JSON.parse(last_response.body.strip)
+        result.should eq(%w[
+          beavis.zen bong bud-frogs bunny cheese cower daemon default dragon
+          dragon-and-cow elephant elephant-in-snake eyes flaming-sheep ghostbusters
+          head-in hellokitty kiss kitty koala kosh luke-koala meow milk moofasa moose
+          mutilated ren satanic sheep skeleton small sodomized stegosaurus stimpy
+          supermilker surgery telebears three-eyes turkey turtle tux udder vader
+          vader-koala www          
+        ])
+      end
+        
+    end    
 end
